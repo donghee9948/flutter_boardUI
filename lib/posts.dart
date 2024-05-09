@@ -122,89 +122,124 @@ class _PostListScreenState extends State<PostListScreen> {
         itemCount: posts.length + (isLoading ? 1 : 0),
         itemBuilder: (BuildContext context, int index) {
           if(index < posts.length) {
-            return GestureDetector(
-              onTap: (){print(posts[index].content);},
+            return InkWell(
+              onTap: () {
+                print(posts[index].content);
+              },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  height: 180,
+                  height: 250,
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: Color(0xFF718096)
-                    )
+                      color: Color(0xFF718096),
+                    ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    CircleAvatar(
+                                      child: Icon(
+                                        Icons.person,
+                                        color: Color(0xFF7C3AED),
+                                      ),
+                                    ),
+                                    SizedBox(width: 12),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          posts[index].memberName,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        Text(
+                                          "숭실대학교, 컴퓨터학부",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      posts[index].title,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      posts[index].content,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16,left: 16),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            CircleAvatar(
-                              child: Icon(Icons.person,color: Color(0xFF7C3AED),)
+                            Text(
+                              "조회수 27", //viewcount
                             ),
-                            SizedBox(width: 12),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               children: [
-                                Text(
-                                  posts[index].memberName,
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),
+                                IconButton(
+                                  icon: Icon(Icons.favorite, color: iconColor),
+                                  onPressed: () {
+                                    toggleFavorite();
+                                  },
                                 ),
                                 Text(
-                                  "숭실대학교, 컴퓨터학부",
-                                  style: TextStyle(fontWeight: FontWeight.normal,fontSize: 14),
-                                )
+                                  "1", //goodcount
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                SizedBox(width: 16,),
+                                Text(
+                                  "댓글 14", //commentcount
+                                  style: TextStyle(fontSize: 14),
+                                ),
+
                               ],
                             ),
                           ],
                         ),
-                        Padding(
-                            padding: const EdgeInsets.all(8),
-                          child: Text(
-                            posts[index].content,
-                            style: TextStyle(fontSize: 16),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-
-                            IconButton(
-                              icon: Icon(Icons.favorite,color: iconColor),
-                              onPressed: (){
-                                toggleFavorite();
-                              },
-                            ),
-
-                            Text(
-                              "1",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            SizedBox(width: 12),
-                            Text(
-                              "댓글 14",
-                              style: TextStyle(fontSize: 14),
-
-                            ),
-                            SizedBox(width: 12),
-                            Text(
-                              "조회수 26",
-                              style: TextStyle(fontSize: 14),
-                            )
-
-                          ],
-                        )
-
-                      ],
-
-                    ),
+                      ),
+                    ],
                   ),
-
                 ),
               ),
             );
