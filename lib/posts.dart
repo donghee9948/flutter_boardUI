@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:flutter_svg/flutter_svg.dart';
 import '/navigation/navigationScreen.dart';
 import '/write.dart';
+import 'package:splash_screen/detail.dart';
 
 class PostDto {
   final int id;
@@ -237,6 +238,10 @@ class _PostListScreenState extends State<PostListScreen> {
                     ],
                   ),
                   onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DetailScreen()),
+                    );
                     // 게시글을 눌렀을 때의 동작을 추가할 수 있습니다.
                   },
                 ),
