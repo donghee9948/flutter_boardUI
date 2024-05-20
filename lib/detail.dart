@@ -70,40 +70,64 @@ class DetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 20.0), // 공간 추가
+              SizedBox(height: 20.0),
               // Comment 글씨
               Text(
                 'Comment',
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 10.0), // 공간 추가
+              SizedBox(height: 10.0),
               // 댓글 리스트
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey,width: 1
                   ),
                   borderRadius: BorderRadius.circular(10.0),
-                  color: Colors.white, // 하얀색 배경
+                  color: Colors.white,
                 ),
-                height: 300.0, // 댓글이 많을 경우 스크롤 가능하도록 높이 지정
-                child: ListView(
-                  children: [
-                    ListTile(
-                      title: Text('사용자1'), //memberid 넣으면댐
-                      subtitle: Text('첫 번째 댓글입니다.'),  //comment 넣으면댐
-                    ),
-                    ListTile(
-                      title: Text('사용자2'),
-                      subtitle: Text('두 번째 댓글입니다.'),
-                    ),
-                    ListTile(
-                      title: Text('사용자3'),
-                      subtitle: Text('세 번째 댓글입니다.'),
-                    ),
-                    // 필요한 만큼 댓글을 추가할 수 있습니다.
-                  ],
+                height: 300.0,
+                child: ListView.separated(
+                  itemCount: 3, // commet 갯수!
+                  itemBuilder: (context, index) {
+                    final memberId = '사용자${index + 1}'; //  memberid
+                    final comment = '${index + 1} 번째 댓글입니다.'; // comment
+
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                        title: Text(memberId, style: TextStyle(fontSize: 18.0)),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(comment, style: TextStyle(fontSize: 16.0)),
+                            SizedBox(height: 10.0),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                  },
+                                  child: Text('댓글(2)'), // 대댓글 숫자 표시!
+                                ),
+                                Spacer(),
+                                IconButton(
+                                  onPressed: () {
+                                  },
+                                  icon: Icon(Icons.favorite, color: Colors.red),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Divider(color: Colors.grey);
+                  },
                 ),
-              ),
+              )
             ],
           ),
         ),
