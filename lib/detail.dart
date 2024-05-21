@@ -11,6 +11,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          scrolledUnderElevation: 0
       ),
       backgroundColor: Colors.white,
       body:  SingleChildScrollView(
@@ -51,7 +52,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('김태민',style: TextStyle(fontWeight: FontWeight.bold),),
-                            Text('수원대학교, 컴퓨터학부'
+                            Text('수원대학교 컴퓨터학부'
                             ),
                             SizedBox(height: 8.0,)
                           ],
@@ -128,13 +129,21 @@ class _DetailScreenState extends State<DetailScreen> {
                             children: [
                               ElevatedButton(
                                 onPressed: () {
+                                  // Your onPressed logic here
                                 },
-                                child: Text('댓글(2)'), // 대댓글 숫자 표시!
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // Adjust the padding
+                                  textStyle: TextStyle(fontSize: 12), // Adjust the font size
+                                  minimumSize: Size(50, 30), // Adjust the minimum size
+                                ),
+                                child: Text('댓글(2)',style: TextStyle(color: Colors.black),), // Display the number of comments
                               ),
                               Spacer(),
                               IconButton(
                                 onPressed: () {
                                 },
+
                                 icon: Icon(Icons.favorite, color: Colors.red),
                               ),
                             ],
