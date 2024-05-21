@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +50,7 @@ class DetailScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('김태민'),
+                            Text('김태민',style: TextStyle(fontWeight: FontWeight.bold),),
                             Text('수원대학교, 컴퓨터학부'
                             ),
                             SizedBox(height: 8.0,)
@@ -92,34 +97,49 @@ class DetailScreen extends StatelessWidget {
                     final memberId = '사용자${index + 1}'; //  memberid
                     final comment = '${index + 1} 번째 댓글입니다.'; // comment
 
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-                        title: Text(memberId, style: TextStyle(fontSize: 18.0)),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(comment, style: TextStyle(fontSize: 16.0)),
-                            SizedBox(height: 10.0),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                  },
-                                  child: Text('댓글(2)'), // 대댓글 숫자 표시!
-                                ),
-                                Spacer(),
-                                IconButton(
-                                  onPressed: () {
-                                  },
-                                  icon: Icon(Icons.favorite, color: Colors.red),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                    return ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.blue,
+                            child: Icon(Icons.person, color: Colors.white),
+                          ),
+                          SizedBox(width: 8.0),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(memberId, style: TextStyle(fontWeight: FontWeight.bold),  //memberid 대입
+                              ),
+                              Text('수원대학교 컴퓨터학부'),
+                            ],
+                          ),
+                        ],
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 16.0),
+                          Text(comment, style: TextStyle(fontSize: 16.0)),   //댓글 내용 대입
+                          SizedBox(height: 10.0),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                },
+                                child: Text('댓글(2)'), // 대댓글 숫자 표시!
+                              ),
+                              Spacer(),
+                              IconButton(
+                                onPressed: () {
+                                },
+                                icon: Icon(Icons.favorite, color: Colors.red),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     );
                   },

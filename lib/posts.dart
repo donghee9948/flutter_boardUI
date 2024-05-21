@@ -79,7 +79,7 @@ class _PostListScreenState extends State<PostListScreen> {
       isLoading = true;
     });
 
-    final response = await http.get(Uri.parse('http://59.13.81.50:8080/posts?page=$page&pageSize=$pageSize&boardId=${widget.boardId}'));
+    final response = await http.get(Uri.parse('http://59.11.250.27:8080/posts?page=$page&pageSize=$pageSize&boardId=${widget.boardId}'));
     setState(() {
       isLoading = false;
     });

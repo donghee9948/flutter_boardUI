@@ -40,7 +40,7 @@ class _InputScreenState extends State<WriteScreen> {
 
   Future<void> _sendTextToAPI(TextModel textModel) async {
     // 여기에 API 엔드포인트를 적절히 설정하세요.
-    String apiUrl = 'http://59.13.81.50:8080/api';
+    String apiUrl = 'http://59.11.250.27:8080/api';
 
     try {
       final response = await http.post(

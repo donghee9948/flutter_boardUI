@@ -33,7 +33,7 @@ class _BoardState extends State<BoardScreen> {
 
   Future<void> fetchBoards() async {
     final memberId = "xoals";  //사용자 id
-    final response = await http.get(Uri.parse('http://59.13.81.50:8080/board?memberId=$memberId'));
+    final response = await http.get(Uri.parse('http://59.11.250.27:8080/board?memberId=$memberId'));
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = jsonDecode(response.body);
       setState(() {
@@ -214,7 +214,7 @@ class BoardDto {
   Future<void> _toggleFavorite(String boardName, String memberId) async {
 
     // API 엔드포인트 설정
-    String apiUrl = "http://59.13.81.50:8080/favorite";
+    String apiUrl = "http://59.11.250.27:8080/favorite";
 
     // POST 요청으로 즐겨찾기 토글 요청 보내기
     try {
