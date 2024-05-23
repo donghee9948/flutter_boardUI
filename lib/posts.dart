@@ -17,6 +17,7 @@ class PostDto {
   final int commentCount;
 
 
+
   PostDto({required this.id,required this.title, required this.content,required this.memberName, required this.goodCount,required this.commentCount});
 
   factory PostDto.fromJson(Map<String, dynamic> json) {
@@ -240,7 +241,7 @@ class _PostListScreenState extends State<PostListScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DetailScreen()),
+                      MaterialPageRoute(builder: (context) => DetailScreen(post : posts[index])),
                     );
                     // 게시글을 눌렀을 때의 동작을 추가할 수 있습니다.
                   },
