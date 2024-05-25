@@ -80,7 +80,7 @@ class _PostListScreenState extends State<PostListScreen> {
       isLoading = true;
     });
 
-    final response = await http.get(Uri.parse('http://59.11.250.27:8080/posts?page=$page&pageSize=$pageSize&boardId=${widget.boardId}'));
+    final response = await http.get(Uri.parse('http://59.11.250.234:8080/posts?page=$page&pageSize=$pageSize&boardId=${widget.boardId}'));
     setState(() {
       isLoading = false;
     });
@@ -241,7 +241,7 @@ class _PostListScreenState extends State<PostListScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DetailScreen(post : posts[index])),
+                      MaterialPageRoute(builder: (context) => DetailScreen(post : posts[index],boardName: widget.boardName)),
                     );
                     // 게시글을 눌렀을 때의 동작을 추가할 수 있습니다.
                   },
