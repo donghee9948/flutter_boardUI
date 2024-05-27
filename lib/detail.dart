@@ -60,6 +60,7 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   final TextEditingController _commentController = TextEditingController();
+  List<bool> _isReplyVisible = List.generate(12, (index) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -121,19 +122,47 @@ class _DetailScreenState extends State<DetailScreen> {
                           SizedBox(
                             width: 8.0,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.post.memberName,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text('수원대학교 컴퓨터학부'),
-                              SizedBox(
-                                height: 8.0,
-                              )
-                            ],
-                          )
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.post.memberName,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text('수원대학교 컴퓨터학부'),
+                                SizedBox(
+                                  height: 8.0,
+                                ),
+                              ],
+                            ),
+                          ),
+                          PopupMenuButton<String>(
+                            onSelected: (String value) {
+                              // Handle the selected option here
+                              if (value == 'edit') {
+                                // Edit action
+                              } else if (value == 'delete') {
+                                // Delete action
+                              }
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return [
+                                PopupMenuItem<String>(
+                                  value: 'edit',
+                                  child: Text('수정'), // OnTap: 속성을 사용해서 write.dart 파일로 이동
+                                  //이동하면 글쓰기 화면에 기존에 썻던 글 내용 나오게!
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'delete',
+                                  child: Text('삭제'), // OnTap: 속성 사용해서 글 삭제
+                                ),
+                              ];
+                            },
+                            icon: Icon(Icons.more_vert),
+                            color: Colors.white,
+
+                          ),
                         ],
                       ),
                       Text(
@@ -169,6 +198,12 @@ class _DetailScreenState extends State<DetailScreen> {
                         final memberId = '사용자${index + 1}'; // memberid
                         final comment = '${index + 1} 번째 댓글입니다.'; // comment
 
+                        // 대댓글 리스트
+                        final List<String> replies = List.generate(
+                          3,
+                              (replyIndex) => '대댓글 ${replyIndex + 1}입니다.',
+                        );
+
                         return Column(
                           children: [
                             ListTile(
@@ -179,18 +214,15 @@ class _DetailScreenState extends State<DetailScreen> {
                                 children: [
                                   CircleAvatar(
                                     backgroundColor: Colors.blue,
-                                    child:
-                                        Icon(Icons.person, color: Colors.white),
+                                    child: Icon(Icons.person, color: Colors.white),
                                   ),
                                   SizedBox(width: 8.0),
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         memberId,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontWeight: FontWeight.bold),
                                       ),
                                       Text('수원대학교 컴퓨터학부'),
                                     ],
@@ -201,47 +233,99 @@ class _DetailScreenState extends State<DetailScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(height: 16.0),
-                                  Text(comment,
-                                      style: TextStyle(fontSize: 16.0)),
+                                  Text(comment, style: TextStyle(fontSize: 16.0)),
                                   SizedBox(height: 10.0),
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
-                                          // Your onPressed logic here
+                                          setState(() {
+                                            _isReplyVisible[index] = !_isReplyVisible[index];
+                                          });
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.white,
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 8.0, vertical: 4.0),
-                                          // Adjust the padding
                                           textStyle: TextStyle(fontSize: 12),
-                                          // Adjust the font size
-                                          minimumSize: Size(50,
-                                              30), // Adjust the minimum size
+                                          minimumSize: Size(50, 30),
                                         ),
-                                        child: Text('댓글(2)',
-                                            style: TextStyle(
-                                                color: Colors
-                                                    .black)), // Display the number of comments
+                                        child: Text(
+                                          '댓글',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
                                       ),
                                       Spacer(),
                                       Row(
                                         children: [
                                           IconButton(
                                             onPressed: () {},
-                                            icon: Icon(Icons.favorite,
-                                                color: Colors.purple),
+                                            icon: Icon(Icons.favorite, color: Colors.purple),
                                           ),
-                                          Text(
-                                            "3", // 좋아요 누른 숫자
-                                          )
+                                          Text("3"), // 좋아요 누른 숫자
                                         ],
                                       ),
                                     ],
                                   ),
+                                  // 대댓글 리스트 표시
+                                  if (_isReplyVisible[index])
+                                    ...replies.map((reply) {
+                                      return Padding(
+                                        padding: EdgeInsets.only(left: 20.0, top: 10.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Icon(Icons.subdirectory_arrow_right, color: Colors.grey),
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(color: Colors.grey, width: 1),
+                                                  borderRadius: BorderRadius.circular(10.0),
+                                                ),
+                                                margin: EdgeInsets.only(left: 8.0),
+                                                child: ListTile(
+                                                  contentPadding: EdgeInsets.symmetric(
+                                                      vertical: 5.0, horizontal: 15.0),
+                                                  title: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      CircleAvatar(
+                                                        backgroundColor: Colors.grey,
+                                                        child: Icon(Icons.person,
+                                                            color: Colors.white),
+                                                      ),
+                                                      SizedBox(width: 8.0),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            '대댓글 사용자',
+                                                            style: TextStyle(
+                                                                fontWeight: FontWeight.bold),
+                                                          ),
+                                                          Text('대댓글 학부'),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  subtitle: Column(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                    children: [
+                                                      SizedBox(height: 16.0),
+                                                      Text(reply,
+                                                          style: TextStyle(fontSize: 14.0)),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }).toList(),
                                 ],
                               ),
                             ),
@@ -256,8 +340,13 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: BottomAppBar(
-          color: Color(0xffffff),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Color(0xffffff),
+            border: Border(
+              top: BorderSide(color: Colors.grey, width: 1.0),
+            ),
+          ),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
             child: Row(
@@ -270,7 +359,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       hintStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none,
                     ),
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),  // Adjust the text color to be visible on white background
                   ),
                 ),
                 SizedBox(width: 6),
@@ -283,6 +372,8 @@ class _DetailScreenState extends State<DetailScreen> {
               ],
             ),
           ),
-        ));
+        ),
+
+    );
   }
 }
