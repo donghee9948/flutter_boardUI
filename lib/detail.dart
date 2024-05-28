@@ -236,34 +236,28 @@ class _DetailScreenState extends State<DetailScreen> {
                                   Text(comment, style: TextStyle(fontSize: 16.0)),
                                   SizedBox(height: 10.0),
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      ElevatedButton(
+                                      Text("2024-05-27"),
+                                      Spacer(),// 날짜 텍스트
+                                      IconButton(
                                         onPressed: () {
                                           setState(() {
                                             _isReplyVisible[index] = !_isReplyVisible[index];
                                           });
                                         },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8.0, vertical: 4.0),
-                                          textStyle: TextStyle(fontSize: 12),
-                                          minimumSize: Size(50, 30),
-                                        ),
-                                        child: Text(
-                                          '댓글',
-                                          style: TextStyle(color: Colors.black),
-                                        ),
+                                        icon: Icon(Icons.chat_bubble_outline, color: Colors.black),
                                       ),
-                                      Spacer(),
+                                      Text('3'),
+                                      SizedBox(width: 8,),
                                       Row(
                                         children: [
                                           IconButton(
                                             onPressed: () {},
                                             icon: Icon(Icons.favorite, color: Colors.purple),
                                           ),
-                                          Text("3"), // 좋아요 누른 숫자
+                                          Text("3"), // 좋아요 숫자
                                         ],
                                       ),
                                     ],
@@ -294,6 +288,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                         backgroundColor: Colors.grey,
                                                         child: Icon(Icons.person,
                                                             color: Colors.white),
+                                                        radius: 16,
                                                       ),
                                                       SizedBox(width: 8.0),
                                                       Column(
@@ -301,11 +296,12 @@ class _DetailScreenState extends State<DetailScreen> {
                                                         CrossAxisAlignment.start,
                                                         children: [
                                                           Text(
-                                                            '대댓글 사용자',
+                                                            '사용자',
                                                             style: TextStyle(
-                                                                fontWeight: FontWeight.bold),
+                                                                fontWeight: FontWeight.bold,fontSize: 14.0),
                                                           ),
-                                                          Text('대댓글 학부'),
+                                                          Text('수원대학교 컴퓨터학부',
+                                                          style: TextStyle(fontSize: 12),),
                                                         ],
                                                       ),
                                                     ],
